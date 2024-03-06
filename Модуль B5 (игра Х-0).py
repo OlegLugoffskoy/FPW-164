@@ -10,7 +10,7 @@ def get_result():
         if i == [chr(10060), chr(10060), chr(10060)]:  # проверяю строковые выигршные комбинации (крестики)
             print('Победа игрока за крестики', chr(10060))
             return 1
-        if i == [chr(11093), chr(11093), chr(11093)]:  # проверяю строковые выигршные комбинации (нолики)
+        elif i == [chr(11093), chr(11093), chr(11093)]:  # проверяю строковые выигршные комбинации (нолики)
             print('Победа игрока за нолики', chr(11093))
             return 1
     lst = []  # создаю пустой лист, в который буду складывать, поочередно, все элементы из game_field
@@ -38,7 +38,6 @@ def output_screen(choice_player1, choice_player2):
     """Функция визуализирует игру, выводя на экран текущее положение на доске
     параметр choice_player1 - выбор игрока 1
     параметр choice_player2 - выбор игрока 2"""
-    # global game_field  # переменную game_field помещаю в глабальную облать видиммости (если потребуется)
     for row in game_field:  # итерирую игровое поле по строкам
         for el in row: # каждую строку итерирую по элементам
             if el == str(choice_player1)+' ':  # привожу переданый параметр 1 к единому типу с элементами и сравниваю
@@ -88,15 +87,17 @@ def man_vs_comp():
             print("Игра закончена")
             break
         else:
-            choice_player2 = random.choice(spisok)
-            spisok.remove(choice_player2)
-            choice_player1 = 0
+            choice_player1 = random.choice(spisok)
+            spisok.remove(choice_player1)
+            choice_player2 = 0
             get_result()
             output_screen(choice_player1, choice_player2)
-
-            choice_player1 = int(input("Сделайте выбор от 1 до 9: "))
-            spisok.remove(choice_player1)
-            get_result()
+            try:
+                choice_player2 = int(input("Сделайте выбор от 1 до 9: "))
+                spisok.remove(choice_player2)
+                get_result()
+            except ValueError:
+                print('Игрок выбрал выпавшую позицию и пропустил ход. Будьте внимательнее!')
             output_screen(choice_player1, choice_player2)
             print("-------------------")
 
@@ -122,7 +123,7 @@ def game_cover():
             print("Победил игрок выбравший решку, он ходит первым, крестиками", chr(10060))
             man_vs_man()  # запускается функция с алгоритмом игры человек против человека
     elif int(choice) == 2:  # если выбор игрока '2', то игра против компьютера:
-        print("\nВы выбрали вариант игры: человек vs компьютер. Компьютер ходит первым, ноликами", chr(11093))
+        print("\nВы выбрали вариант игры: человек vs компьютер. Компьютер ходит первым, крестиками", chr(10060))
         man_vs_comp()  # запускается функция с алгоритмом игры человек против компьютера
     else:  # если выбрана какая то другая цифра игра завершается
         print("Вы вышли из игры")
@@ -130,96 +131,3 @@ def game_cover():
 
 game_cover()  # запуск игры
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# for i in game_field:
-#     for j in i:
-#         if j == choice_player:
-#             ind = i.index(j)
-#             i[ind] = 'x'
-#             spisok.remove(choice_player)
-#             choice_comp = random.choice(spisok)
-#             spisok.remove(int(choice_comp))
-#             ind_comp = i.index(int(choice_comp))
-#             i[ind_comp] = '0'
-
-
-
-
-# import random
-#
-# lst = []
-# for row in range(3):
-#     for column in range(3):
-#         lst.append(tuple([str(row), str(column)]))
-#
-# print(lst)
-#
-#
-# # choice_player = input("Введите через пробел строку/столбец:"))
-#
-#
-# choice_player = '1 1'
-# choice_player = tuple(choice_player.split())
-# print(choice_player)
-# lst.remove(choice_player)
-# print(lst)
-# choice_comp = random.choice(lst)
-# print(choice_comp)
-
-# str1 = '_|_|_'
-# str1 = '_|_|_'
-# str3 = ' | |'
-#
-
-#
-# if choice_player[0] == '0':
-#     if choice_player[1] == '0':
-#         str1 = "x| | "
-#     elif choice_player[1] == '1':
-#         str1 = " |x| "
-#     else:
-#         str1 = "_|_|x"
-# elif choice_player[0] == '1':
-#     if choice_player[1] == '0':
-#         str2 = "x|_ | "
-#     elif choice_player[1] == '1':
-#         str2 = "_|x|_"
-#     else:
-#         str2 = " | |x"
-# else:
-#     if choice_player[1] == '0':
-#         str3 = "x| | "
-#     elif choice_player[1] == '1':
-#         str3 = " |x| "
-#     else:
-#         str3 = " | |x"
-# print(f"{str1}\n{str2} \n{str3}")
